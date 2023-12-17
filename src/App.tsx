@@ -1,10 +1,15 @@
-function App() {
+import { CoffeeShow } from "./components/CoffeeShow";
+import { Header } from "./components/Header";
+import { GlobalStyles } from "./styles/GlobalStyles";
 
+function App() {
   return (
-    <ContainerApp>
-      teste
-    </ContainerApp>
-  )
+    <>
+      <GlobalStyles />
+      <Header />
+      <CoffeeShow />
+    </>
+  );
 }
 
-export default App
+export default App;
