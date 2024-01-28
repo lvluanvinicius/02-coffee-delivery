@@ -21,7 +21,7 @@ export function Header() {
             Porto Alegre
           </LocationCity>
 
-          <Cart>
+          <Cart to={`cart`}>
             <ShoppingCart size={22} weight="fill" />
             <CountProducts>3</CountProducts>
           </Cart>

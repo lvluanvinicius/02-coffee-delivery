@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Container } from "../../styles/components/Container";
+import { Link } from "react-router-dom";
 
 export const HeaderContainer = styled(Container)``;
 
@@ -38,12 +39,13 @@ export const LocationCity = styled.button`
   }
 `;
 
-export const Cart = styled.div`
+export const Cart = styled(Link)`
   background: ${(props) => props.theme["yellow-light"]};
   color: ${(props) => props.theme["yellow-dark"]};
   border-radius: 8px;
   padding: 0.5rem 0.7rem;
   position: relative;
+  cursor: pointer;
 `;
 
 export const CountProducts = styled.div`
