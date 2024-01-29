@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { Container } from "../../styles/components/Container";
-import { ActionAddProductsContainer } from "../ActionAddProducts/styled";
 
 export const CartContentContainer = styled(Container)``;
 
