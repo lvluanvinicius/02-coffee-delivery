@@ -1,10 +1,16 @@
-import { CreditCard, CurrencyDollar, MapPinLine } from "@phosphor-icons/react";
+import { CartPaymentData } from "./components/CartPaymentData";
 import {
   CartContentArea,
   CartContentContainer,
-  CartPaymentDataContainer,
-  CartPaymentDataContent,
+  CartResumeContainer,
+  ProductCartListContainer,
+  RemoveFromCartContainer,
 } from "./styled";
+
+import imageCoffe from "../../assets/coffes/Coffee-01.png";
+import { CoffeeRenderImages } from "../CoffeeRenderImages";
+import { ActionAddProducts } from "../ActionAddProducts";
+import { Trash } from "@phosphor-icons/react";
 
 export function CartContent() {
   return (
@@ -17,82 +23,72 @@ export function CartContent() {
         </div>
         <div className="cart-resume">
           <h1>Cafés selecionados</h1>
+
+          <CartResume />
         </div>
       </CartContentArea>
     </CartContentContainer>
   );
 }
 
-export function CartPaymentData() {
+export function CartResume() {
   return (
-    <CartPaymentDataContainer>
-      <CartPaymentDataContent>
-        <div className="address">
-          <div className="address-title">
-            <span>
-              <MapPinLine size={26} />
-            </span>
-            <div className="address-description">
-              <h2>Endereço de Entrega</h2>
-              <p>Informe o endereço onde deseja receber seu pedido</p>
-            </div>
-          </div>
+    <CartResumeContainer>
+      <ProductCartList title="Expresso Tradicional" price={9.9} />
+      <div className="divider">
+        <hr />
+      </div>
+      <ProductCartList title="Latte" price={9.9} />
+      <div className="divider">
+        <hr />
+      </div>
+      <div className="price-resume">
+        <div className="total-items">
+          <span>Total de itens</span>
+          <span>R$ 29,70</span>
+        </div>
+        <div className="freight">
+          <span>Entrega</span>
+          <span>R$ 29,70</span>
+        </div>
+        <div className="total">
+          <span>Total</span>
+          <span>R$ 33,20</span>
+        </div>
+      </div>
+    </CartResumeContainer>
+  );
+}
 
-          <div className="form-address">
-            <div className="form-group cep">
-              <input type="text" placeholder="CEP" />
-            </div>
+interface ProductCartListProps {
+  title: string;
+  price: number;
+}
 
-            <div className="form-group public-place">
-              <input type="text" placeholder="Rua" />
-            </div>
-
-            <div className="form-group number-complement">
-              <input type="text" placeholder="Número" className="number" />
-              <input
-                type="text"
-                placeholder="Complemento"
-                className="complement"
-              />
-            </div>
-
-            <div className="form-group location">
-              <input type="text" placeholder="Bairro" className="district" />
-              <input type="text" placeholder="City" className="city" />
-              <input type="text" placeholder="UF" className="state" />
-            </div>
-          </div>
+export function ProductCartList({ title }: ProductCartListProps) {
+  return (
+    <ProductCartListContainer>
+      <CoffeeRenderImages image={imageCoffe} />
+      <div className="content">
+        <div className="title">
+          <span>{title}</span>
+          <span>R$ 9,99</span>
         </div>
 
-        <div className="method-pay">
-          <div className="title">
-            <span>
-              <CurrencyDollar size={26} />
-            </span>
-            <div className="method-pay-description">
-              <h2>Endereço de Entrega</h2>
-              <p>Informe o endereço onde deseja receber seu pedido</p>
-            </div>
-          </div>
-
-          <div className="content-form">
-            <div className="card-selector">
-              <CreditCard size={24} />
-              <span>Cartão de crédito</span>
-            </div>
-
-            <div className="card-selector">
-              <CreditCard size={24} />
-              <span>Cartão de débito</span>
-            </div>
-
-            <div className="card-selector">
-              <CreditCard size={24} />
-              <span>Dinheiro</span>
-            </div>
-          </div>
+        <div className="action">
+          <ActionAddProducts className="action-cart" />
+          <RemoveFromCart />
         </div>
-      </CartPaymentDataContent>
-    </CartPaymentDataContainer>
+      </div>
+    </ProductCartListContainer>
+  );
+}
+
+export function RemoveFromCart() {
+  return (
+    <RemoveFromCartContainer>
+      <Trash size={18} />
+      <span>Remover</span>
+    </RemoveFromCartContainer>
   );
 }

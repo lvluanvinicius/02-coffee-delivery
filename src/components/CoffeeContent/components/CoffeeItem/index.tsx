@@ -1,5 +1,5 @@
 import { CartActions } from "../CartActions";
-import { CoffeeRenderImages } from "../CoffeeRenderImages";
+import { CoffeeRenderImages } from "../../../CoffeeRenderImages";
 import { TagCoffeeType } from "../TagCoffeeType";
 import { CoffeItemContainer } from "./styled";
 

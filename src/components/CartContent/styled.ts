@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Container } from "../../styles/components/Container";
+import { ActionAddProductsContainer } from "../ActionAddProducts/styled";
 
 export const CartContentContainer = styled(Container)``;
 
@@ -16,163 +17,117 @@ export const CartContentArea = styled.form`
     flex: 1;
 
     h1 {
+      margin-bottom: 1rem;
       font-family: "Baloo 2";
-      font-size: 1.2rem;
+      font-size: 1.3rem;
     }
   }
 
   .cart-resume {
-    width: 450px;
+    width: 500px;
 
     h1 {
+      margin-bottom: 1rem;
       font-family: "Baloo 2";
-      font-size: 1.2rem;
+      font-size: 1.3rem;
     }
   }
 `;
 
-export const CartPaymentDataContainer = styled.div`
-  .address {
-    background: ${(props) => props.theme["base-card"]};
-    border-radius: 6px;
-    padding: 2rem;
+export const CartResumeContainer = styled.div`
+  background: ${(props) => props.theme["base-card"]};
+  border-radius: 6px;
+  padding: 2rem;
+
+  .divider {
+    width: 100%;
+    padding: 1rem 0;
+
+    hr {
+      border-color: ${(props) => props.theme["base-button"]};
+      opacity: 0.3;
+    }
   }
 
-  .method-pay {
-    margin-top: 1rem;
-    background: ${(props) => props.theme["base-card"]};
-    border-radius: 6px;
-    padding: 2rem;
-  }
-`;
-
-export const CartPaymentDataContent = styled.div`
-  .address-title {
+  .price-resume {
     display: flex;
-    gap: 1rem;
-    align-items: start;
-  }
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100px;
 
-  .address-title span svg {
-    color: ${(props) => props.theme["yellow-dark"]};
-  }
-
-  .address-title .address-description,
-  .method-pay .method-pay-description {
-    h2 {
-      font-size: 1.1rem;
-      font-style: normal;
+    .total-items,
+    .freight {
+      color: ${(props) => props.theme["base-text"]};
+      font-size: 1rem;
       font-weight: 500;
     }
 
-    p {
-      font-size: 1rem;
-      font-style: normal;
-      font-weight: 400;
+    .total-items,
+    .freight,
+    .total {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .total {
+      font-weight: 800;
+      font-size: 1.4rem;
+      color: ${(props) => props.theme["base-subtitle"]};
     }
   }
+`;
 
-  .form-address {
-    margin-bottom: 1rem;
-    margin-top: 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
+export const ProductCartListContainer = styled.div`
+  height: 70px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 
-  .form-address .form-group {
+  .content {
     width: 100%;
+  }
 
-    input {
-      border: 1px solid ${(props) => props.theme["base-button"]};
-      background: ${(props) => props.theme["base-input"]};
-      padding: 14px;
-      border-radius: 6px;
-      font-size: 1rem;
-      color: ${(props) => props.theme["base-label"]};
+  .title {
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
 
-      &::placeholder {
-        color: ${(props) => props.theme["base-label"]};
-      }
-
-      &:focus {
-        box-shadow: 0 0 0 1px ${(props) => props.theme.purple};
-      }
-    }
-
-    &.cep input {
-      width: 250px;
-    }
-
-    &.public-place input {
-      width: 100%;
-    }
-
-    &.number-complement {
-      display: flex;
-      gap: 1rem;
-    }
-
-    &.number-complement input.number {
-      width: 250px;
-    }
-
-    &.number-complement input.complement {
-      flex: 1;
-    }
-
-    &.location {
-      display: flex;
-      gap: 1rem;
-      .district {
-        width: 250px;
-      }
-      .city {
-        flex: 1;
-      }
-      .state {
-        width: 100px;
-      }
+    span:nth-child(2) {
+      font-family: "Baloo 2";
+      font-size: 1.1rem;
+      font-style: normal;
+      font-weight: 800;
+      line-height: 130%;
     }
   }
 
-  .method-pay .title {
+  img {
+    margin: 0;
+    width: 60px !important;
+    height: 60px !important;
+  }
+
+  .action {
     display: flex;
-    align-items: start;
     gap: 1rem;
   }
+`;
 
-  .method-pay .title span svg {
+export const RemoveFromCartContainer = styled.div`
+  display: flex;
+  align-items: center;
+  background: ${(props) => props.theme["base-button"]};
+  border-radius: 6px;
+  font-size: 0.8rem;
+  padding: 0 0.7rem;
+  gap: 4px;
+
+  svg {
     color: ${(props) => props.theme.purple};
   }
 
-  .method-pay .content-form {
-    display: flex;
-    gap: 1rem;
-    justify-content: space-between;
-    margin-top: 1rem;
-  }
-
-  .method-pay .content-form .card-selector {
-    background-color: ${(props) => props.theme["base-button"]};
-    width: 250px;
-    display: flex;
-    justify-content: left;
-    align-items: center;
-    padding-left: 1.5rem;
-    height: 65px;
-    border-radius: 6px;
-    gap: 1rem;
-    cursor: pointer;
-
-    svg {
-      color: ${(props) => props.theme.purple};
-    }
-
-    span {
-      font-style: normal;
-      font-size: 0.9rem;
-      text-transform: uppercase;
-    }
-  }
+  cursor: pointer;
 `;
