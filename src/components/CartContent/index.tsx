@@ -131,7 +131,7 @@ export function ProductCartList({
         </div>
 
         <div className="action">
-          <ActionAddProducts />
+          <ActionAddProducts quantity={0} handleQuantity={console.log} />
           <RemoveFromCart />
         </div>
       </div>
