@@ -131,7 +131,7 @@ export function ProductCartList({
         </div>
 
         <div className="action">
-          <ActionAddProducts className="action-cart" />
+          <ActionAddProducts />
           <RemoveFromCart />
         </div>
       </div>

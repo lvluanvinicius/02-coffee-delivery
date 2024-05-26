@@ -20,7 +20,7 @@ export function LocationCity() {
   const { handleSetAddressClient, address } = useContext(CoffeeContext);
 
   const [open, setOpen] = useState(false);
-  const { handleSubmit, register, reset, formState } = useForm<{
+  const { handleSubmit, register, formState } = useForm<{
     cep: string;
   }>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);

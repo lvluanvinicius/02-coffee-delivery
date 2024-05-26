@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { ActionAddProducts } from "../../../ActionAddProducts";
 import { CartActionsContainer } from "./styled";
 import { ShoppingCart } from "@phosphor-icons/react";

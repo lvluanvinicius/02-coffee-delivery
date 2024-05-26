@@ -8,10 +8,9 @@ interface ActionAddProductsProps {
 export function ActionAddProducts({
   quantity,
   handleQuantity,
-  ...props
 }: ActionAddProductsProps) {
   return (
-    <ActionAddProductsContainer {...props}>
+    <ActionAddProductsContainer className="action-cart">
       <button onClick={() => handleQuantity("decrement")}>-</button>
       <span>{quantity}</span>
       <button onClick={() => handleQuantity("increment")}>+</button>

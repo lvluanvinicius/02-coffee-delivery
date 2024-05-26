@@ -33,8 +33,7 @@ interface CartPaymentDataSchema {
 export function CartPaymentData() {
   const { handleSetAddressClient, address } = useContext(CoffeeContext);
 
-  const { register, control, reset, formState } =
-    useForm<CartPaymentDataSchema>();
+  const { register, control, reset } = useForm<CartPaymentDataSchema>();
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
