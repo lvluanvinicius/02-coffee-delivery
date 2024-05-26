@@ -1,3 +1,4 @@
+import { CartCoffesProvider } from "./context/cart.context";
 import { CoffeeProvider } from "./context/coffee.context";
 import { AppRouters } from "./routes/index.routes";
 import { GlobalStyles } from "./styles/GlobalStyles";
@@ -5,8 +6,10 @@ import { GlobalStyles } from "./styles/GlobalStyles";
 function App() {
   return (
     <CoffeeProvider>
-      <GlobalStyles />
-      <AppRouters />
+      <CartCoffesProvider>
+        <GlobalStyles />
+        <AppRouters />
+      </CartCoffesProvider>
     </CoffeeProvider>
   );
 }

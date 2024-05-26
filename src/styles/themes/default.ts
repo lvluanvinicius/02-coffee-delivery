@@ -1,5 +1,6 @@
 export const defaultTheme = {
   white: "#FFF",
+  overlay: "#000000b8",
   "yellow-dark": "#C47F17",
   yellow: "#DBAC2C",
   "yellow-light": "#F1E9C9",

@@ -1,8 +1,8 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ActionAddProducts } from "../../../ActionAddProducts";
 import { CartActionsContainer } from "./styled";
 import { ShoppingCart } from "@phosphor-icons/react";
-import { CoffeeContext } from "../../../../context/coffee.context";
+import { CartCoffesContext } from "../../../../context/cart.context";
 
 interface CartActionsProps {
   coffeeid: number;
@@ -10,8 +10,8 @@ interface CartActionsProps {
 }
 
 export function CartActions({ coffeeid, price }: CartActionsProps) {
-  const [quantity, setQuantity] = useState<number>(1);
-  const { selectProduct } = useContext(CoffeeContext);
+  const [quantity, setQuantity] = useState<number>(0);
+  const { selectProduct } = useContext(CartCoffesContext);
 
   function handleQuantity(action: string) {
     if (action === "increment")
@@ -26,6 +26,14 @@ export function CartActions({ coffeeid, price }: CartActionsProps) {
       });
   }
 
+  function handleSetProduct() {
+    if (quantity <= 0) {
+      return null;
+    }
+
+    selectProduct({ id: coffeeid, quantity });
+  }
+
   return (
     <CartActionsContainer>
       <div className="price">
@@ -36,10 +44,7 @@ export function CartActions({ coffeeid, price }: CartActionsProps) {
           handleQuantity={handleQuantity}
           quantity={quantity}
         />
-        <button
-          className="add-cart"
-          onClick={() => selectProduct({ id: coffeeid, quantity })}
-        >
+        <button className="add-cart" onClick={handleSetProduct}>
           <ShoppingCart size={16} weight="fill" />
         </button>
       </div>

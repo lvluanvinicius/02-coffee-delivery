@@ -163,3 +163,9 @@ export const CartPaymentDataContent = styled.div`
     }
   }
 `;
+
+export const LocationCityMessage = styled.div`
+  color: red;
+  font-size: 0.8rem;
+  text-align: center;
+`;

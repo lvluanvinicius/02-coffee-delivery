@@ -1,29 +1,29 @@
-import { MapPin, ShoppingCart } from "@phosphor-icons/react";
+import { ShoppingCart } from "@phosphor-icons/react";
 import Logo from "../../assets/logo.png";
 import {
   HeaderContainer,
   HeaderContent,
   Menu,
-  LocationCity,
   Cart,
   CountProducts,
 } from "./styled";
-import { CoffeeContext } from "../../context/coffee.context";
 import { useContext } from "react";
+import { LocationCity } from "../LocationCity/index";
+import { Link } from "react-router-dom";
+import { CartCoffesContext } from "../../context/cart.context";
 
 export function Header() {
-  const { cartSelectedProducts } = useContext(CoffeeContext);
+  const { cartSelectedProducts } = useContext(CartCoffesContext);
 
   return (
     <HeaderContainer>
       <HeaderContent>
-        <img src={Logo} alt="" />
+        <Link to={"/"}>
+          <img src={Logo} alt="" />
+        </Link>
 
         <Menu>
-          <LocationCity>
-            <MapPin size={22} weight="fill" />
-            Porto Alegre
-          </LocationCity>
+          <LocationCity />
 
           <Cart to={`cart`}>
             <ShoppingCart size={22} weight="fill" />

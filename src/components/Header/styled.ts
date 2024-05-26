@@ -20,25 +20,6 @@ export const Menu = styled.div`
   gap: 1rem;
 `;
 
-export const LocationCity = styled.button`
-  background: ${(props) => props.theme["purple-light"]};
-  color: ${(props) => props.theme["purple-dark"]};
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  font-size: 1rem;
-
-  cursor: pointer;
-
-  svg {
-    color: ${(props) => props.theme.purple};
-  }
-`;
-
 export const Cart = styled(Link)`
   background: ${(props) => props.theme["yellow-light"]};
   color: ${(props) => props.theme["yellow-dark"]};

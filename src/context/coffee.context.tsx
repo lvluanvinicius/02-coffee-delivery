@@ -1,7 +1,7 @@
 import { ReactNode, createContext, useEffect, useState } from "react";
 import { getCoffees } from "../services/coffee";
 
-interface CoffeeProps {
+export interface CoffeeProps {
   id: number;
   title: string;
   tags: string[];
@@ -10,14 +10,24 @@ interface CoffeeProps {
   image: string;
 }
 
-interface CartSelectedProducts extends CoffeeProps {
-  quantity?: number;
+export interface ClientAddresses {
+  cep: string;
+  logradouro: string;
+  complemento: string;
+  bairro: string;
+  localidade: string;
+  number?: string;
+  uf: string;
+  ibge: string;
+  gia: string;
+  ddd: string;
+  siafi: string;
 }
 
 interface CoffeeContextProps {
   coffees: CoffeeProps[];
-  cartSelectedProducts: CoffeeProps[];
-  selectProduct: (product: { id: number; quantity: number }) => void;
+  address: ClientAddresses | null;
+  handleSetAddressClient: (address: ClientAddresses) => void;
 }
 
 interface CoffeeProviderProps {
@@ -29,29 +39,22 @@ export const CoffeeContext = createContext({} as CoffeeContextProps);
 export function CoffeeProvider({ children }: CoffeeProviderProps) {
   const [coffees, setCoffees] = useState<CoffeeProps[]>([]);
 
-  const [cartSelectedProducts, setCartSelectedProducts] = useState<
-    CartSelectedProducts[]
-  >([]);
+  const [address, setAddress] = useState<ClientAddresses | null>(function () {
+    const add = localStorage.getItem("@pizzashop:location-client");
+    if (add) return JSON.parse(add);
+    return null;
+  });
 
   async function loadCoffees() {
     const response = await getCoffees();
     setCoffees(response);
   }
 
-  function selectProduct(product: { id: number; quantity: number }): void {
-    let productItem = coffees.filter((coffee) => coffee.id === product.id);
-
-    let validadeExists = cartSelectedProducts.filter(
-      (cartProd) => cartProd.id === product.id,
-    );
-
-    if (validadeExists.length <= 1) {
-      console.log("existe");
-
-      return null;
-    }
-
-    console.log(validadeExists);
+  function handleSetAddressClient(address: ClientAddresses) {
+    localStorage.removeItem("@pizzashop:location-client");
+    localStorage.setItem("@pizzashop:location-client", JSON.stringify(address));
+    if (!address) setAddress(null);
+    setAddress(address);
   }
 
   useEffect(() => {
@@ -60,7 +63,11 @@ export function CoffeeProvider({ children }: CoffeeProviderProps) {
 
   return (
     <CoffeeContext.Provider
-      value={{ coffees, selectProduct, cartSelectedProducts }}
+      value={{
+        address,
+        coffees,
+        handleSetAddressClient,
+      }}
     >
       {children}
     </CoffeeContext.Provider>

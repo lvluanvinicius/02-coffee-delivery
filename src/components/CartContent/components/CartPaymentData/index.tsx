@@ -1,6 +1,6 @@
 import * as RadioGroup from "@radix-ui/react-radio-group";
-import { FormEvent } from "react";
-import { useForm, Controller, useFormContext } from "react-hook-form";
+import { FormEvent, useContext, useEffect, useState } from "react";
+import { useForm, Controller } from "react-hook-form";
 import {
   Bank,
   CreditCard,
@@ -8,23 +8,73 @@ import {
   MapPinLine,
   Money,
 } from "@phosphor-icons/react";
-import { CartPaymentDataContainer, CartPaymentDataContent } from "./styled";
+import {
+  CartPaymentDataContainer,
+  CartPaymentDataContent,
+  LocationCityMessage,
+} from "./styled";
 import { getAddress } from "../../../../services/viacep";
+import {
+  ClientAddresses,
+  CoffeeContext,
+} from "../../../../context/coffee.context";
+
+interface CartPaymentDataSchema {
+  cep: string;
+  logradouro: string;
+  complemento: string;
+  bairro: string;
+  localidade: string;
+  number?: string;
+  uf: string;
+  type_payment: "card-credt" | "card-debit" | "money";
+}
 
 export function CartPaymentData() {
-  const { register, control } = useFormContext();
+  const { handleSetAddressClient, address } = useContext(CoffeeContext);
+
+  const { register, control, reset, formState } =
+    useForm<CartPaymentDataSchema>();
+
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   async function handleAddress(event: FormEvent<HTMLInputElement>) {
-    if (event.currentTarget) {
-      const { value } = event.currentTarget;
-      const response =
-        value &&
-        event.currentTarget.value.length >= 8 &&
-        (await getAddress(value));
+    try {
+      if (event.currentTarget) {
+        const { value } = event.currentTarget;
 
-      console.log(response);
+        // Valida se um valor foi informado.
+        if (!value) throw new Error("Por favor, informe seu cep.");
+
+        // Só segue para a execução da busca se o valor tiver mais que 8 caracteres.
+        if (value.length <= 8) return null;
+
+        // Valida o formato do CEP.
+        if (!value.match("^[0-9][0-9][0-9][0-9][0-9]-[0-9][0-9][0-9]"))
+          throw new Error(
+            "Formato de cep inválido ou não informado.\nSiga o exemplo: 12345-678",
+          );
+
+        // Efetua o envio da string para API.
+        const response = await getAddress(value);
+
+        if (response.data) {
+          if (response.data.erro) {
+            throw new Error("CEP informado é inválido.");
+          } else {
+            // Atualizando CEP no estado.
+            handleSetAddressClient(response.data as ClientAddresses);
+          }
+        }
+      }
+    } catch (err) {
+      if (err instanceof Error) setErrorMessage(err.message);
     }
   }
+
+  useEffect(() => {
+    address && reset(address);
+  }, [address]);
 
   return (
     <CartPaymentDataContainer>
@@ -44,9 +94,10 @@ export function CartPaymentData() {
             <div className="form-group cep">
               <input
                 type="text"
-                placeholder="CEP"
+                placeholder="CEP: 12345-678"
                 {...register("cep")}
                 onChange={handleAddress}
+                onInput={() => setErrorMessage(null)}
               />
             </div>
 
@@ -54,7 +105,7 @@ export function CartPaymentData() {
               <input
                 type="text"
                 placeholder="Rua"
-                {...register("public_place")}
+                {...register("logradouro")}
               />
             </div>
 
@@ -69,7 +120,7 @@ export function CartPaymentData() {
                 type="text"
                 placeholder="Complemento"
                 className="complement"
-                {...register("complement")}
+                {...register("complemento")}
               />
             </div>
 
@@ -78,21 +129,27 @@ export function CartPaymentData() {
                 type="text"
                 placeholder="Bairro"
                 className="district"
-                {...register("district")}
+                {...register("bairro")}
               />
               <input
                 type="text"
                 placeholder="City"
                 className="city"
-                {...register("city")}
+                {...register("localidade")}
               />
               <input
                 type="text"
                 placeholder="UF"
                 className="state"
-                {...register("state")}
+                {...register("uf")}
               />
             </div>
+
+            {errorMessage && (
+              <LocationCityMessage>
+                <span>{errorMessage}</span>
+              </LocationCityMessage>
+            )}
           </div>
         </div>
 
@@ -112,6 +169,9 @@ export function CartPaymentData() {
           <Controller
             control={control}
             name="type_payment"
+            rules={{
+              required: "Informe um meio de pagamento.",
+            }}
             render={({ field }) => (
               <RadioGroup.Root
                 className="content-form"

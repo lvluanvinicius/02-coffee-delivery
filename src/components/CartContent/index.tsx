@@ -12,6 +12,8 @@ import {
 import imageCoffe from "../../assets/coffes/Coffee-01.png";
 import { CoffeeRenderImages } from "../CoffeeRenderImages";
 import { ActionAddProducts } from "../ActionAddProducts";
+import { useContext, useEffect, useState } from "react";
+import { CartCoffesContext } from "../../context/cart.context";
 
 export function CartContent() {
   const methods = useForm();
@@ -41,20 +43,49 @@ export function CartContent() {
 }
 
 export function CartResume() {
+  const { cartSelectedProducts } = useContext(CartCoffesContext);
+
+  const [totalItens, setTotalItens] = useState(0);
+
+  useEffect(() => {
+    if (cartSelectedProducts.length > 0) {
+      cartSelectedProducts.map((item) => {
+        const total = item.price * item.quantity;
+        setTotalItens((state) => state + total);
+      });
+    }
+  }, [cartSelectedProducts]);
+
   return (
     <CartResumeContainer>
-      <ProductCartList title="Expresso Tradicional" price={9.9} />
+      {cartSelectedProducts.map((coffe) => {
+        return (
+          <div key={coffe.id}>
+            <ProductCartList
+              title="Expresso Tradicional"
+              price={coffe.price}
+              quantity={coffe.quantity}
+            />
+            <div className="divider">
+              <hr />
+            </div>
+          </div>
+        );
+      })}
+
       <div className="divider">
         <hr />
       </div>
-      <ProductCartList title="Latte" price={9.9} />
-      <div className="divider">
-        <hr />
-      </div>
+
       <div className="price-resume">
         <div className="total-items">
           <span>Total de itens</span>
-          <span>R$ 29,70</span>
+          <span>
+            {totalItens.toLocaleString("pt-BR", {
+              currency: "BRL",
+              style: "currency",
+            })}
+          </span>
         </div>
         <div className="freight">
           <span>Entrega</span>
@@ -62,7 +93,12 @@ export function CartResume() {
         </div>
         <div className="total">
           <span>Total</span>
-          <span>R$ 33,20</span>
+          <span>
+            {totalItens.toLocaleString("pt-BR", {
+              currency: "BRL",
+              style: "currency",
+            })}
+          </span>
         </div>
       </div>
     </CartResumeContainer>
@@ -72,16 +108,26 @@ export function CartResume() {
 interface ProductCartListProps {
   title: string;
   price: number;
+  quantity: number;
 }
 
-export function ProductCartList({ title }: ProductCartListProps) {
+export function ProductCartList({
+  title,
+  price,
+  quantity,
+}: ProductCartListProps) {
   return (
     <ProductCartListContainer>
       <CoffeeRenderImages image={imageCoffe} />
       <div className="content">
         <div className="title">
           <span>{title}</span>
-          <span>R$ 9,99</span>
+          <span>
+            {(price * quantity).toLocaleString("pt-BR", {
+              currency: "BRL",
+              style: "currency",
+            })}
+          </span>
         </div>
 
         <div className="action">
