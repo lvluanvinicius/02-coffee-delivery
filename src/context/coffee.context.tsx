@@ -47,6 +47,7 @@ export function CoffeeProvider({ children }: CoffeeProviderProps) {
 
   async function loadCoffees() {
     const response = await getCoffees();
+   
     setCoffees(response);
   }
 

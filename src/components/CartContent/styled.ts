@@ -130,3 +130,20 @@ export const RemoveFromCartContainer = styled.div`
 
   cursor: pointer;
 `;
+
+export const ConfirmCheckout = styled.button`
+  width: 100%;
+  height: 60px;
+  margin-top: 1rem;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: ${(props) => props.theme.white};
+  background-color: ${(props) => props.theme.yellow};
+
+  &:hover {
+    background-color: ${(props) => props.theme["yellow-dark"]};
+    cursor: pointer;
+  }
+`;

@@ -5,7 +5,7 @@ export const coffeeService = axios.create({
 });
 
 export async function getCoffees() {
-  const response = await coffeeService.get("coffes?_order=desc&_sort=title");
+  const response = await coffeeService.get("/coffes");
 
   return response.data && response.data;
 }

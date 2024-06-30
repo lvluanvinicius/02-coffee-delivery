@@ -53,7 +53,7 @@ export function LocationCity() {
     <LocationCityContainer open={open} onOpenChange={setOpen}>
       <LocationCityTrigger>
         <MapPin size={22} weight="fill" />
-        {address ? address.localidade : "Buscar..."}
+        {address ? `${address.localidade}, ${address.uf}` : "Buscar..."}
       </LocationCityTrigger>
 
       <Dialog.Portal>

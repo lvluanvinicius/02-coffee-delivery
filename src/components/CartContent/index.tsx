@@ -5,6 +5,7 @@ import {
   CartContentArea,
   CartContentContainer,
   CartResumeContainer,
+  ConfirmCheckout,
   ProductCartListContainer,
   RemoveFromCartContainer,
 } from "./styled";
@@ -45,7 +46,7 @@ export function CartContent() {
 export function CartResume() {
   const { cartSelectedProducts } = useContext(CartCoffesContext);
 
-  const [totalItens, setTotalItens] = useState(0);
+  const [totalItens, setTotalItens] = useState(5);
 
   useEffect(() => {
     if (cartSelectedProducts.length > 0) {
@@ -89,7 +90,12 @@ export function CartResume() {
         </div>
         <div className="freight">
           <span>Entrega</span>
-          <span>R$ 29,70</span>
+          <span>
+          {(5).toLocaleString("pt-BR", {
+              currency: "BRL",
+              style: "currency",
+            })}
+          </span>
         </div>
         <div className="total">
           <span>Total</span>
@@ -99,6 +105,9 @@ export function CartResume() {
               style: "currency",
             })}
           </span>
+        </div>
+        <div>
+          <ConfirmCheckout>confirmar pedido</ConfirmCheckout>
         </div>
       </div>
     </CartResumeContainer>
@@ -131,7 +140,7 @@ export function ProductCartList({
         </div>
 
         <div className="action">
-          <ActionAddProducts quantity={0} handleQuantity={console.log} />
+          <ActionAddProducts quantity={quantity} handleQuantity={console.log} />
           <RemoveFromCart />
         </div>
       </div>
